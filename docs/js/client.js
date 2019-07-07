@@ -1,20 +1,15 @@
-let onlineReq = new XMLHttpRequest(), onlineData;
+setTimeout(() => { let onlineReq = new XMLHttpRequest(), onlineData;
 
-onlineReq.open('GET', 'http://krd_online.csrv.pl/online');
+onlineReq.open('GET', 'https://mcapi.us/server/status?ip=krd_online.csrv.pl');
 onlineReq.send();
 
 onlineReq.onload = () => {
   onlineData = JSON.parse(onlineReq.responseText)
 
-  if(onlineData.status == "ERR") {
-    // Serwer off || "tryb czuwania"
-  } else {
-    if(onlineData.status == "OK") {
-      //Serwer działa pobieram dane:
-      let max_players = onlineData.max_players;
-      let online_players = onlineData.online;
-      let motd = onlineData.motd;
-      let online_players_names = onlineData.online_list;
-    }
+  if(onlineData.online) {
+    console.log('Serwer działa!')
   }
-}
+  document.write(onlineData.motd);
+  document.write(onlineData.players.now + '/' + onlineData.players.max)
+
+}, 1000)
